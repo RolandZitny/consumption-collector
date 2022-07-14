@@ -5,16 +5,16 @@ from consumption_collector.collector import Collector
 
 async def a(com, queue):
     while True:
-        await asyncio.sleep(6)
+        await asyncio.sleep(1)
         com.send_request()
         com.get_point(queue)
 
 
 async def b(coll, queue):
     while True:
-        await asyncio.sleep(15)
+        await asyncio.sleep(5)
         coll.push_data(queue)
-
+        print("Send")
 
 if __name__ == "__main__":
     points_queue = []

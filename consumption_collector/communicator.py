@@ -1,4 +1,5 @@
 import struct
+import time
 from datetime import datetime
 from slmpclient import SLMPClient, SLMPPacket, FrameType, ProcessorNumber, TimerValue, SLMPCommand, SLMPSubCommand
 from influxdb_client import Point
@@ -57,19 +58,16 @@ class Communicator:
         self._response = self._client.receive()
 
     def get_point(self, points_queue):
-        # TODO
-        #ready_flag, data = self.parse_response(self._response)
-        timestamp = datetime.utcnow().strftime('%Y-%d-%m %H:%M:%S.%f')[:-2]
-        point = (Point("consumption")
-                 .tag("timestamp", timestamp)
-                 .field("M32", 32)
-                 .field("M33", 33)
-                 .field("M34", 34)
-                 .field("M35", 35)
-                 .field("M36", 36)
-                 .field("M37", 37))
-
-        points_queue.append(point)
+        ready_flag, data = self.parse_response(self._response)
+        if ready_flag:
+            point = (Point("slmp").tag("timestamp", time.time())
+                     .field("M32", int(data[0]))
+                     .field("M33", int(data[1]))
+                     .field("M34", int(data[2]))
+                     .field("M35", int(data[3]))
+                     .field("M36", int(data[4]))
+                     .field("M37", int(data[5])))
+            points_queue.append(point)
 
 
 
