@@ -1,5 +1,5 @@
 services:
-  consumption-collector:
+  test:
     image: consumption-collector
     container_name: influxdb-collector
     restart: always
