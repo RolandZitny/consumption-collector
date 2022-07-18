@@ -1,12 +1,6 @@
+version: "1.0"
 services:
-  cons-coll:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: consumption-collector:latest
-    restart: always
-    environment:
-    - SLMP_IP_ADDR=192.168.100.163
-    - INFLUX_URL=192.168.100.163:4050
-    command:
-    - echo "I'm running."
+  app:
+    build: .
+  conscoll:
+    image: consumption-collector
