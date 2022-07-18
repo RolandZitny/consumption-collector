@@ -2,5 +2,8 @@ version: "3.3"
 services:
   app:
     build: .
-  conscoll:
+  consumption-collector:
     image: consumption-collector
+    environment:
+      - SLMP_IP_ADDR=10.54.2.76
+      - INFLUX_URL=10.54.2.76:4050
