@@ -4,7 +4,7 @@ services:
     container_name: influxdb-collector
     restart: always
     environment:
-      - SLMP_IP_ADDR=192.168.100.163
-      - INFLUX_URL=192.168.100.163:4050
+      - SLMP_IP_ADDR='192.168.100.163'
+      - INFLUX_URL='192.168.100.163:4050'
     command:
       - echo "I'm running on SLMPClient ${SLMP_IP_ADDR} and InfluxDB ${INFLUX_URL}"
