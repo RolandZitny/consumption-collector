@@ -1,1 +1,4 @@
 slmpclient~=1.9.0
+influxdb-client~=1.30.0
+aiohttp~=3.8.1
+
