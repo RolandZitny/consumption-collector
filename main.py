@@ -2,6 +2,7 @@
 Main program of asynchronous communication between Mitsubishi robotic arm and InfluxDB for collecting time series data.
 """
 import asyncio
+from config import get_config
 from consumption_collector.communicator import Communicator
 from consumption_collector.collector import Collector
 
@@ -30,11 +31,15 @@ async def collect_points(coll, sleep_time):
         print("Send")
 
 if __name__ == "__main__":
-    collector = Collector(url="http://localhost:4050",
-                          token="qKbKhyK47-oxSOwJwiv_sUdqAVM1Uq9q2e64AC42Yf6_k8V1M-gs0iQKGFmAQtsjtgJQkcPM8TmDs6hG9nLTYQ==",
-                          org="ALPSRobot",
-                          bucket="slmp")
-    communicator = Communicator(ipaddr="127.0.0.1", port=4067, tcp=True, collector=collector)
+    collector = Collector(url=get_config('INFLUX_URL'),
+                          token=get_config('INFLUX_TOKEN'),
+                          org=get_config('INFLUX_ORG'),
+                          bucket=get_config('INFLUX_BUCKET'))
+
+    communicator = Communicator(ipaddr=get_config('SLMP_IP_ADDR'),
+                                port=get_config('SLMP_PORT'),
+                                tcp=get_config('SLMP_TCP'),
+                                collector=collector)
 
     loop = asyncio.get_event_loop()
     loop.create_task(obtain_point(communicator, 1))
