@@ -1,6 +1,6 @@
 services:
-  test:
-    image: consumption-collector
+  consumption-collector:
+    image: consumption-collector:latest
     container_name: influxdb-collector
     restart: always
     environment:
