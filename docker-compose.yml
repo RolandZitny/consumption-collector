@@ -1,8 +1,9 @@
 services:
-  build:
+  cons-coll:
+    build:
+      context:
+      dockerfile: Dockerfile
     image: consumption-collector:latest
-    container_name: influxdb-collector
-    restart: always
     environment:
     - SLMP_IP_ADDR=192.168.100.163
     - INFLUX_URL=192.168.100.163:4050
