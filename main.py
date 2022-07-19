@@ -37,7 +37,7 @@ if __name__ == "__main__":
                           bucket=get_config('INFLUX_BUCKET'))
 
     communicator = Communicator(ipaddr=get_config('SLMP_IP_ADDR'),
-                                port=get_config('SLMP_PORT'),
+                                port=get_config('SLMP_PORT', wrapper=int),
                                 tcp=get_config('SLMP_TCP'),
                                 collector=collector)
 
