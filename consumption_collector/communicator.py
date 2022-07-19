@@ -72,7 +72,8 @@ class Communicator:
             print("M32          : ", data[6])
             print("")
 
-        return flag, [data[6], data[5], data[4], data[3], data[2], data[1]]
+        #TODO
+        return True, [data[6], data[5], data[4], data[3], data[2], data[1]]
 
     def send_request(self):
         """
