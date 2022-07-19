@@ -14,7 +14,8 @@ async def obtain_point(com, sleep_time):
     :param com: Communicator class
     """
     while True:
-        await asyncio.sleep(sleep_time)
+        if sleep_time != 0:
+            await asyncio.sleep(sleep_time)
         com.send_request()
         com.get_point()
 
@@ -42,7 +43,7 @@ if __name__ == "__main__":
                                 collector=collector)
 
     loop = asyncio.get_event_loop()
-    loop.create_task(obtain_point(communicator, 1))
+    loop.create_task(obtain_point(communicator, 0))
     loop.create_task(collect_points(collector, 3))
     loop.run_forever()
 
