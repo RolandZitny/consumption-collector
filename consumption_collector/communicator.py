@@ -87,13 +87,14 @@ class Communicator:
         """
         ready_flag, data = self.parse_response(self._response)
         if ready_flag:
-            point = (Point("slmp").measurement('energy-consumption')
+            point = (Point("slmp").tag('Robotic Arm', 'XXX')
                      .field("M32", int(data[0]))
                      .field("M33", int(data[1]))
                      .field("M34", int(data[2]))
                      .field("M35", int(data[3]))
                      .field("M36", int(data[4]))
-                     .field("M37", int(data[5])))
+                     .field("M37", int(data[5]))
+                     .time(time.time_ns(), write_precision=WritePrecision.NS))
             self._collector.save_point(point)   # Save into Collector
 
 
