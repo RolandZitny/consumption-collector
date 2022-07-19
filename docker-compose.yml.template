@@ -1,0 +1,12 @@
+version: "3.3"
+services:
+  consumption-collector:
+    image: consumption-collector:latest
+    environment:
+      - SLMP_IP_ADDR=
+      - SLMP_PORT=
+      - SLMP_TCP=
+      - INFLUX_URL=
+      - INFLUX_TOKEN=
+      - INFLUX_BUCKET=
+      - INFLUX_ORG=

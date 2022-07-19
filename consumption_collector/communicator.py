@@ -84,17 +84,16 @@ class Communicator:
         """
         Creates Influx point from response and save into internal queue of Collector.
         """
-        #ready_flag, data = self.parse_response(self._response)
-        ready_flag = True
-        data = [0, 1, 2, 3, 4, 5]
+        ready_flag, data = self.parse_response(self._response)
         if ready_flag:
-            point = (Point("slmp").tag("timestamp", time.time())
+            point = (Point("slmp").measurement('energy-consumption')
                      .field("M32", int(data[0]))
                      .field("M33", int(data[1]))
                      .field("M34", int(data[2]))
                      .field("M35", int(data[3]))
                      .field("M36", int(data[4]))
-                     .field("M37", int(data[5])))
+                     .field("M37", int(data[5]))
+                     .time(time.time_ns()))
             self._collector.save_point(point)   # Save into Collector
 
 

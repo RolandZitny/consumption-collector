@@ -10,6 +10,9 @@ __pycache__/
 #idea
 .idea
 
+# Docker compose file
+docker-compose.yml
+
 # Distribution / packaging
 .Python
 build/
