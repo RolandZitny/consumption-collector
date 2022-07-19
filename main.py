@@ -39,7 +39,7 @@ if __name__ == "__main__":
 
     communicator = Communicator(ipaddr=get_config('SLMP_IP_ADDR'),
                                 port=get_config('SLMP_PORT', wrapper=int),
-                                tcp=get_config('SLMP_TCP'),
+                                tcp=True,
                                 collector=collector)
 
     loop = asyncio.get_event_loop()
