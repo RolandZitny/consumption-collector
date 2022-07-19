@@ -7,8 +7,8 @@ Response is parsed and from data are created InfluxDB points, which are saved in
 """
 import time
 import struct
-from influxdb_client import Point
-from influxdb_client.domain.write_precision import WritePrecision
+from datetime import datetime
+from influxdb_client import Point, WritePrecision
 from slmpclient import SLMPClient, SLMPPacket, FrameType, ProcessorNumber, TimerValue, SLMPCommand, SLMPSubCommand
 
 
@@ -94,7 +94,7 @@ class Communicator:
                      .field("M35", int(data[3]))
                      .field("M36", int(data[4]))
                      .field("M37", int(data[5]))
-                     .time(time.time_ns(), write_precision=WritePrecision.NS))
+                     .time(datetime.utcnow(), WritePrecision.MS))
             self._collector.save_point(point)   # Save into Collector
 
 
