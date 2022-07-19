@@ -28,7 +28,7 @@ async def collect_points(coll, sleep_time):
     while True:
         await asyncio.sleep(sleep_time)
         coll.flush_data()
-        print("Send")
+
 
 if __name__ == "__main__":
     collector = Collector(url=get_config('INFLUX_URL'),

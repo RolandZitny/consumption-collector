@@ -7,14 +7,14 @@ from typing import Callable
 
 DEFAULT_CONFIG = {
     # slmpclient
-    'SLMP_IP_ADDR': '127.0.0.1',
-    'SLMP_PORT': 4067,
+    'SLMP_IP_ADDR': 'slmp_server_ipaddr',
+    'SLMP_PORT': 0000,
     'SLMP_TCP': True,
     # InfluxDB
-    'INFLUX_URL': 'http://localhost:4050',
-    'INFLUX_TOKEN': 'qKbKhyK47-oxSOwJwiv_sUdqAVM1Uq9q2e64AC42Yf6_k8V1M-gs0iQKGFmAQtsjtgJQkcPM8TmDs6hG9nLTYQ==',
-    'INFLUX_ORG': 'ALPSRobot',
-    'INFLUX_BUCKET': 'slmp'
+    'INFLUX_URL': 'influx_url',
+    'INFLUX_TOKEN': 'token',
+    'INFLUX_ORG': 'org',
+    'INFLUX_BUCKET': 'bucket'
 }
 
 
