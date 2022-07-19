@@ -93,8 +93,7 @@ class Communicator:
                      .field("M34", int(data[2]))
                      .field("M35", int(data[3]))
                      .field("M36", int(data[4]))
-                     .field("M37", int(data[5]))
-                     .time(time.time_ns(), write_precision=WritePrecision.NS))
+                     .field("M37", int(data[5])))
             self._collector.save_point(point)   # Save into Collector
 
 
