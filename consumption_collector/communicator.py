@@ -91,6 +91,7 @@ class Communicator:
 
         if ready_flag:
             point = (Point("slmp").measurement('energy-consumption').tag('Robotic Arm', 'X')
+                     .field("Timestamp", datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3])
                      .field("M32", int(data[0]))
                      .field("M33", int(data[1]))
                      .field("M34", int(data[2]))
