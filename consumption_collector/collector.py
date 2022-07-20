@@ -14,12 +14,11 @@ class Collector:
         :param org: InfluxDB organization
         :param bucket: InfluxDB bucket
         """
-        print("COLLECTOR INIT")
         self._url = url
         self._token = token
         self._org = org
         self._bucket = bucket
-        self._points_queue = []                  # Queue for points
+        self._points_queue = []         # Queue for points
 
     def save_point(self, point):
         """

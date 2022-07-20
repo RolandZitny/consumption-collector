@@ -47,10 +47,12 @@ class Communicator:
         :param response: response
         :param print_flag: DEBUG flag to print response
         """
-        end_code = response[8:10]
-        if end_code != b'\x00\x00' or len(response) < 67:
-            print("parse ERR")  # TODO log
-            exit(1)
+
+        #TODO if errr
+        #end_code = response[8:10]
+        #if end_code != b'\x00\x00' or len(response) < 67:
+        #    print("parse ERR")  # TODO log
+        #    exit(1)
 
         response_data_part = response[11:67]
         data = struct.unpack('<ddddddd', response_data_part)
@@ -98,8 +100,9 @@ class Communicator:
                      .field("M34", int(data[2]))
                      .field("M35", int(data[3]))
                      .field("M36", int(data[4]))
-                     .field("M37", int(data[5]))
-                     .time(datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]))
+                     .field("M37", int(data[5])))
+                     #  TODO v influxe neni na ms, len s
+                     # .time(datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]))
             self._collector.save_point(point)   # Save into Collector
 
 
