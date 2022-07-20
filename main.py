@@ -64,5 +64,7 @@ if __name__ == "__main__":
                                                           max_retries=5,
                                                           max_retry_delay=30_000,
                                                           exponential_base=2)) as write_client:
-            communicator.get_point(write_client)
+            while True:
+                communicator.send_request()
+                communicator.get_point(write_client)
 

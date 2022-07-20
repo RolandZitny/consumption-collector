@@ -49,10 +49,10 @@ class Communicator:
         """
 
         #TODO if errr
-        #end_code = response[8:10]
-        #if end_code != b'\x00\x00' or len(response) < 67:
-        #    print("parse ERR")  # TODO log
-        #    exit(1)
+        end_code = response[8:10]
+        if end_code != b'\x00\x00' or len(response) < 67:
+            print("parse ERR")  # TODO log
+            exit(1)
 
         response_data_part = response[11:67]
         data = struct.unpack('<ddddddd', response_data_part)
