@@ -98,7 +98,6 @@ class Communicator:
                      .field("M37", int(data[5]))
                      .time(datetime.utcnow(), WritePrecision.MS))
             self._collector.save_point(point)   # Save into Collector
-            print("save_point")
 
 
 

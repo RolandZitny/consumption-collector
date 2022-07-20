@@ -35,9 +35,10 @@ class Collector:
         with InfluxDBClient(url=self._url, token=self._token, org=self._org) as influx_client:
             write_api = influx_client.write_api()
             record = []
-
+            print("self._points_queue:   ", len(self._points_queue))
             while len(self._points_queue) != 1:
                 record.append(self._points_queue.pop(0))
 
+            print("record DB:   ", len(record))
             write_api.write(bucket=self._bucket, record=record)
 
