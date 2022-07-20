@@ -10,3 +10,5 @@ services:
       - INFLUX_TOKEN=
       - INFLUX_BUCKET=
       - INFLUX_ORG=
+      - DATA_SLEEP=
+      - FLUSH_SLEEP=
