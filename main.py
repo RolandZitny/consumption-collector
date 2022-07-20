@@ -42,7 +42,7 @@ if __name__ == "__main__":
                                 collector=collector)
 
     loop = asyncio.get_event_loop()
-    loop.create_task(obtain_point(communicator, 0.0010))
+    loop.create_task(obtain_point(communicator, 100/1000))
     loop.create_task(collect_points(collector, 3))
     loop.run_forever()
 
