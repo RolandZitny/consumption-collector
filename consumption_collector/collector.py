@@ -36,7 +36,7 @@ class Collector:
             write_api = influx_client.write_api()
             record = []
 
-            while len(self._points_queue) != 0:
+            while len(self._points_queue) != 1:
                 record.append(self._points_queue.pop(0))
 
             write_api.write(bucket=self._bucket, record=record)
