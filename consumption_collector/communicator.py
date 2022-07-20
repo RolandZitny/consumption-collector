@@ -88,10 +88,9 @@ class Communicator:
         Creates Influx point from response and save into internal queue of Collector.
         """
         ready_flag, data = self.parse_response(self._response)
-        global x
-        x += 1
+
         if ready_flag:
-            point = (Point("slmp").tag('Robotic Arm', str(x))
+            point = (Point("slmp").tag('Robotic Arm', 'ID')
                      .field("M32", int(data[0]))
                      .field("M33", int(data[1]))
                      .field("M34", int(data[2]))
