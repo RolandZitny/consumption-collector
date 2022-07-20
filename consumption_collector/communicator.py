@@ -11,6 +11,8 @@ from datetime import datetime
 from influxdb_client import Point, WritePrecision
 from slmpclient import SLMPClient, SLMPPacket, FrameType, ProcessorNumber, TimerValue, SLMPCommand, SLMPSubCommand
 
+x = 0
+
 
 class Communicator:
     def __init__(self, ipaddr=None, port=None, tcp=True, collector=None):
@@ -88,8 +90,10 @@ class Communicator:
         #ready_flag, data = self.parse_response(self._response)
         ready_flag = True
         data = [0, 1, 2, 3, 4, 5]
+        global x
+        x += 1
         if ready_flag:
-            point = (Point("slmp").tag('Robotic Arm', 'XXX')
+            point = (Point("slmp").tag('Robotic Arm', str(x))
                      .field("M32", int(data[0]))
                      .field("M33", int(data[1]))
                      .field("M34", int(data[2]))

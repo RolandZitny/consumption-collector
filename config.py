@@ -7,11 +7,11 @@ from typing import Callable
 
 DEFAULT_CONFIG = {
     # slmpclient
-    'SLMP_IP_ADDR': 'slmp_server_ipaddr',
-    'SLMP_PORT': 0000,
+    'SLMP_IP_ADDR': '10.54.2.76',
+    'SLMP_PORT': 4070,
     'SLMP_TCP': True,
     # InfluxDB
-    'INFLUX_URL': 'influx_url',
+    'INFLUX_URL': '10.54.2.76:4050',
     'INFLUX_TOKEN': 'token',
     'INFLUX_ORG': 'org',
     'INFLUX_BUCKET': 'bucket'
