@@ -43,7 +43,7 @@ if __name__ == "__main__":
                                 collector=collector)
 
     loop = asyncio.get_event_loop()
-    loop.create_task(obtain_point(communicator, get_config('DATA_SLEEP', wrapper=int)))
-    loop.create_task(collect_points(collector, get_config('FLUSH_SLEEP', wrapper=int)))
+    loop.create_task(obtain_point(communicator, get_config('DATA_SLEEP', wrapper=float)))
+    loop.create_task(collect_points(collector, get_config('FLUSH_SLEEP', wrapper=float)))
     loop.run_forever()
 
