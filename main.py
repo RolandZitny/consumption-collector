@@ -38,11 +38,11 @@ if __name__ == "__main__":
 
     communicator = Communicator(ipaddr=get_config('SLMP_IP_ADDR'),
                                 port=get_config('SLMP_PORT', wrapper=int),
-                                tcp=True,
+                                tcp=get_config('SLMP_TCP', wrapper=int),
                                 collector=collector)
 
     loop = asyncio.get_event_loop()
-    loop.create_task(obtain_point(communicator, 0.0010))
-    loop.create_task(collect_points(collector, 10))
+    loop.create_task(obtain_point(communicator, get_config('DATA_SLEEP', wrapper=int)))
+    loop.create_task(collect_points(collector, get_config('FLUSH_SLEEP', wrapper=int)))
     loop.run_forever()
 

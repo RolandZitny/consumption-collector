@@ -7,7 +7,6 @@ Response is parsed and from data are created InfluxDB points, which are saved in
 """
 import time
 import struct
-from datetime import datetime
 from influxdb_client import Point, WritePrecision
 from slmpclient import SLMPClient, SLMPPacket, FrameType, ProcessorNumber, TimerValue, SLMPCommand, SLMPSubCommand
 
@@ -90,6 +89,7 @@ class Communicator:
         ready_flag, data = self.parse_response(self._response)
 
         if ready_flag:
+            """
             point = (Point("slmp").tag('Robotic Arm', str(time.time_ns()))
                      .field("M32", int(data[0]))
                      .field("M33", int(data[1]))
@@ -98,7 +98,9 @@ class Communicator:
                      .field("M36", int(data[4]))
                      .field("M37", int(data[5]))
                      .time(time.time_ns(), WritePrecision.NS))
-            self._collector.save_point(point)   # Save into Collector
+            """
+            one_line = "robot-consumption,RobotID=X M32=1 "+str(time.time_ns())
+            self._collector.save_point(one_line)   # Save into Collector
 
 
 

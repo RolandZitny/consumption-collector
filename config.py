@@ -9,12 +9,15 @@ DEFAULT_CONFIG = {
     # slmpclient
     'SLMP_IP_ADDR': '10.54.2.76',
     'SLMP_PORT': 4070,
-    'SLMP_TCP': True,
+    'SLMP_TCP': 1,
     # InfluxDB
     'INFLUX_URL': '10.54.2.76:4050',
     'INFLUX_TOKEN': 'token',
     'INFLUX_ORG': 'org',
-    'INFLUX_BUCKET': 'bucket'
+    'INFLUX_BUCKET': 'bucket',
+    # async comm sleep
+    'DATA_SLEEP': 0.0010,   # When getting data from robot sleep 1ms
+    'FLUSH_SLEEP': 3        # Flush  every 3 seconds
 }
 
 
