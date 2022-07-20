@@ -85,7 +85,7 @@ class Communicator:
         self._client.send(self._request)
         self._response = self._client.receive()
 
-    def get_point(self):
+    def get_point(self, write_client):
         """
         Creates Influx point from response and save into internal queue of Collector.
         """
@@ -101,7 +101,9 @@ class Communicator:
                      .field("M36", int(data[4]))
                      .field("M37", int(data[5]))
                      .time(datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]))
-            self._collector.save_point(point)   # Save into Collector
+            write_client.write(bucket='slmp', Point=point)
+            # TODO
+            #self._collector.save_point(point)   # Save into Collector
 
 
 
