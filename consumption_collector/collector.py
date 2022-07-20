@@ -25,6 +25,8 @@ class Collector:
         Method for saving/uploading points into Collectors queue.
         :param point: InfluxDB point
         """
+        print("SAVE_POINT")
+        print(len(self._points_queue))
         self._points_queue.append(point)
 
     def flush_data(self):
