@@ -2,6 +2,7 @@
 Collector collects data from some type of communicator, which produces this data in the form of influx points.
 These data are stored in a queue and after a defined time are flushed to the database (InfluxDB).
 """
+from influxdb_client import Point, WriteOptions
 from influxdb_client.client.influxdb_client import InfluxDBClient
 
 
@@ -33,6 +34,8 @@ class Collector:
         Method for flushing data into InfluxDB. This method needs to be called at defined intervals.
         This method takes all data from Collectors points_queue, till it reach empty queue.
         """
+        # TODO batch in
+
         with InfluxDBClient(url=self._url, token=self._token, org=self._org) as influx_client:
             write_api = influx_client.write_api()
             record = []
@@ -42,4 +45,3 @@ class Collector:
 
             print("record DB:   ", len(record))
             write_api.write(bucket=self._bucket, record=record)
-

@@ -87,9 +87,7 @@ class Communicator:
         """
         Creates Influx point from response and save into internal queue of Collector.
         """
-        #ready_flag, data = self.parse_response(self._response)
-        ready_flag = True
-        data = [0, 1, 2, 3, 4, 5]
+        ready_flag, data = self.parse_response(self._response)
         global x
         x += 1
         if ready_flag:
