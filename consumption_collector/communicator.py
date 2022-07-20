@@ -24,7 +24,7 @@ class Communicator:
         :param collector: Collector class, where to save points.
         """
         self._collector = collector
-        self._client = SLMPClient(ip_addr=ipaddr, port=port, protocol=tcp)
+        self._client = SLMPClient(ip_addr=ipaddr, port=port, tcp=tcp)
         self._client.open()
 
         pucData = b'\xAC\x12\x00\xA8\x1C\x00'  # Reading will start from register D4780, and takes 28 words
