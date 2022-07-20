@@ -1,9 +1,6 @@
 """
 Main program of asynchronous communication between Mitsubishi robotic arm and InfluxDB for collecting time series data.
 """
-from influxdb_client import WriteOptions
-from influxdb_client.client.influxdb_client import InfluxDBClient
-
 import asyncio
 from config import get_config
 from consumption_collector.communicator import Communicator
@@ -34,7 +31,6 @@ async def collect_points(coll, sleep_time):
 
 
 if __name__ == "__main__":
-    """
     collector = Collector(url=get_config('INFLUX_URL'),
                           token=get_config('INFLUX_TOKEN'),
                           org=get_config('INFLUX_ORG'),
@@ -49,22 +45,4 @@ if __name__ == "__main__":
     loop.create_task(obtain_point(communicator, get_config('DATA_SLEEP', wrapper=float)))
     loop.create_task(collect_points(collector, get_config('FLUSH_SLEEP', wrapper=float)))
     loop.run_forever()
-    """
-    communicator = Communicator(ipaddr=get_config('SLMP_IP_ADDR'),
-                                port=get_config('SLMP_PORT', wrapper=int),
-                                tcp=get_config('SLMP_TCP', wrapper=int),
-                                collector=None)
-    with InfluxDBClient(url=get_config('INFLUX_URL'),
-                        token=get_config('INFLUX_TOKEN'),
-                        org=get_config('INFLUX_ORG')) as _client:
-        with _client.write_api(write_options=WriteOptions(batch_size=500,
-                                                          flush_interval=3_000,
-                                                          jitter_interval=0,
-                                                          retry_interval=5_000,
-                                                          max_retries=5,
-                                                          max_retry_delay=30_000,
-                                                          exponential_base=2)) as write_client:
-            while True:
-                communicator.send_request()
-                communicator.get_point(write_client)
 

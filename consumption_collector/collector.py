@@ -2,7 +2,6 @@
 Collector collects data from some type of communicator, which produces this data in the form of influx points.
 These data are stored in a queue and after a defined time are flushed to the database (InfluxDB).
 """
-from influxdb_client import WriteOptions
 from influxdb_client.client.influxdb_client import InfluxDBClient
 
 
