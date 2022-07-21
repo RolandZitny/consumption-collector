@@ -1,7 +1,6 @@
 """
 Main program of asynchronous communication between Mitsubishi robotic arm and InfluxDB for collecting time series data.
 """
-import asyncio
 from asyncio import sleep, get_event_loop
 from config import get_config
 from consumption_collector.collector import Collector
@@ -11,7 +10,7 @@ from consumption_collector.communicator import Communicator
 async def obtain_point(com, sleep_time):
     """
     Asynchronous function for reading energy consumption from 6 register of robotic arm.
-    :param sleep_time: interval of reading in seconds
+    :param sleep_time: read interval in seconds
     :param com: Communicator class
     """
     while True:
@@ -22,7 +21,7 @@ async def obtain_point(com, sleep_time):
 async def collect_points(coll, sleep_time):
     """
     Asynchronous function for flushing obtained data from robotic arm into InfluxDB.
-    :param sleep_time:
+    :param sleep_time: flush interval in seconds
     :param coll: Collector class
     """
     while True:

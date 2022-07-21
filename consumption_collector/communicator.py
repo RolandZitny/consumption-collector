@@ -6,8 +6,8 @@ synchronization flag.
 Response is parsed and from data are created InfluxDB points, which are saved into internal queue of Collector.
 """
 import struct
-import datetime
 from config import get_config
+from datetime import datetime
 from influxdb_client import Point
 from slmpclient import UnwantedResponse
 from slmpclient import SLMPClient, SLMPPacket, FrameType, ProcessorNumber, TimerValue, SLMPCommand, SLMPSubCommand
@@ -17,7 +17,6 @@ class Communicator:
     def __init__(self, ipaddr=None, port=None, tcp=True, collector=None):
         """
         Initialize Communicator.
-        Communicator
         :param ipaddr: IP ADDR of robotic arm
         :param port: PORT or robotic arm
         :param tcp: Flag -> True = TCP, False = UDP
@@ -42,15 +41,14 @@ class Communicator:
     def parse_response(self):
         """
         Parsing of SLMP response.
-        :param response: response
         :returns True/False, [data], True -> write, False -> skip
         """
         # Check whether answer is ok, if not exception
         # May occur when SLMP server does not understand request
-        if self._response[8:10] != b'\x00\x00' or len(self._response) < 67:
+        if self._response[8:10] != b'\x00\x00' or len(self._response) < 67:     # length of 7 registers
             raise UnwantedResponse
 
-        data = struct.unpack('<ddddddd', self._response[11:67])
+        data = struct.unpack('<ddddddd', self._response[11:67])     # transfer 7 register values into readable form
 
         # Synchronization, if synchronization register (M38) == 1 write data
         if data[0] == 1:
@@ -59,7 +57,7 @@ class Communicator:
 
     def send_request(self):
         """
-        Send request to robotic arm.
+        Send request to robotic arm and save response into self._response.
         """
         self._client.send(self._request)
         self._response = self._client.receive()
@@ -70,9 +68,6 @@ class Communicator:
         """
         self.send_request()
         ready_flag, data = self.parse_response()
-        # TODO debug
-        ready_flag = True
-        data = [32.2, 33.3, 34.4, 35.5, 36.6, 37]
         if ready_flag:
             point = (Point("energy-consumption")
                      .tag('robotic-arm', get_config('SLMP_IP_ADDR'))
@@ -82,7 +77,7 @@ class Communicator:
                      .field("M35", float(data[3]))
                      .field("M36", float(data[4]))
                      .field("M37", float(data[5]))
-                     .time(datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]))
+                     .time(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]))
             self._collector.save_point(point)   # Save into Collector
 
 
