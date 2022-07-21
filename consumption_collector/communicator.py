@@ -69,7 +69,7 @@ class Communicator:
         Creates Influx point from response and save into internal queue of Collector.
         """
         self.send_request()
-        test, data = self.parse_response()
+        ready_flag, data = self.parse_response()
         # TODO debug
         ready_flag = True
         data = [32, 33, 34, 35, 36, 37]

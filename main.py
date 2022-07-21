@@ -2,6 +2,7 @@
 Main program of asynchronous communication between Mitsubishi robotic arm and InfluxDB for collecting time series data.
 """
 import asyncio
+from asyncio import sleep, get_event_loop
 from config import get_config
 from consumption_collector.collector import Collector
 from consumption_collector.communicator import Communicator
@@ -14,7 +15,7 @@ async def obtain_point(com, sleep_time):
     :param com: Communicator class
     """
     while True:
-        await asyncio.sleep(sleep_time)
+        await sleep(sleep_time)
         com.get_point()
 
 
@@ -25,11 +26,16 @@ async def collect_points(coll, sleep_time):
     :param coll: Collector class
     """
     while True:
-        await asyncio.sleep(sleep_time)
+        await sleep(sleep_time)
         coll.flush_data()
 
 
 def main():
+    """
+    Start two asynchronous parallel cycles.
+    One cycle is for obtaining data points from robotic arm.
+    Second cycle is for flushing obtained data into InfluxDB.
+    """
     collector = Collector(url=get_config('INFLUX_URL'),
                           token=get_config('INFLUX_TOKEN'),
                           org=get_config('INFLUX_ORG'),
@@ -40,7 +46,7 @@ def main():
                                 tcp=get_config('SLMP_TCP', wrapper=int),
                                 collector=collector)
 
-    loop = asyncio.get_event_loop()
+    loop = get_event_loop()
     loop.create_task(obtain_point(communicator, get_config('DATA_SLEEP', wrapper=float)))
     loop.create_task(collect_points(collector, get_config('FLUSH_SLEEP', wrapper=float)))
     loop.run_forever()
