@@ -72,16 +72,16 @@ class Communicator:
         ready_flag, data = self.parse_response()
         # TODO debug
         ready_flag = True
-        data = [32, 33, 34, 35, 36, 37]
+        data = [32.2, 33.3, 34.4, 35.5, 36.6, 37]
         if ready_flag:
             point = (Point("energy-consumption")
                      .tag('robotic-arm', get_config('SLMP_IP_ADDR'))
-                     .field("M32", int(data[0]))
-                     .field("M33", int(data[1]))
-                     .field("M34", int(data[2]))
-                     .field("M35", int(data[3]))
-                     .field("M36", int(data[4]))
-                     .field("M37", int(data[5]))
+                     .field("M32", float(data[0]))
+                     .field("M33", float(data[1]))
+                     .field("M34", float(data[2]))
+                     .field("M35", float(data[3]))
+                     .field("M36", float(data[4]))
+                     .field("M37", float(data[5]))
                      .time(datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]))
             self._collector.save_point(point)   # Save into Collector
 
