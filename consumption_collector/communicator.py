@@ -7,7 +7,9 @@ Response is parsed and from data are created InfluxDB points, which are saved in
 """
 import struct
 import datetime
+from config import get_config
 from influxdb_client import Point
+from slmpclient import UnwantedResponse
 from slmpclient import SLMPClient, SLMPPacket, FrameType, ProcessorNumber, TimerValue, SLMPCommand, SLMPSubCommand
 
 
@@ -35,45 +37,25 @@ class Communicator:
                                      usSubCommand=SLMPSubCommand.SUB_word0.value, pucData=pucData)
 
         self._request = slmp_controller.create_stream()
-        self._TAKE_FLAG = True
         self._response = None
 
-    def parse_response(self, response, print_flag=False):
+    def parse_response(self):
         """
         Parsing of SLMP response.
         :param response: response
-        :param print_flag: DEBUG flag to print response
+        :returns True/False, [data], True -> write, False -> skip
         """
+        # Check whether answer is ok, if not exception
+        # May occur when SLMP server does not understand request
+        if self._response[8:10] != b'\x00\x00' or len(self._response) < 67:
+            raise UnwantedResponse
 
-        #TODO if errr
-        end_code = response[8:10]
-        if end_code != b'\x00\x00' or len(response) < 67:
-            print("parse ERR")  # TODO log
-            exit(1)
+        data = struct.unpack('<ddddddd', self._response[11:67])
 
-        response_data_part = response[11:67]
-        data = struct.unpack('<ddddddd', response_data_part)
-
-        # Synchronization to not take data again if they are the same.
-        if data[0] == 1 and self._TAKE_FLAG is True:
-            flag = True
-            self._TAKE_FLAG = False
-        else:
-            flag = False
-            self._TAKE_FLAG = True
-
-        # Just print out data
-        if print_flag is True:
-            print("M38          : ", data[0])
-            print("M37          : ", data[1])
-            print("M36          : ", data[2])
-            print("M35          : ", data[3])
-            print("M34          : ", data[4])
-            print("M33          : ", data[5])
-            print("M32          : ", data[6])
-            print("")
-
-        return flag, [data[6], data[5], data[4], data[3], data[2], data[1]]
+        # Synchronization, if synchronization register (M38) == 1 write data
+        if data[0] == 1:
+            return True, [data[6], data[5], data[4], data[3], data[2], data[1]]  # M32, M33, M34, M35, M36, M37
+        return False, []
 
     def send_request(self):
         """
@@ -86,12 +68,14 @@ class Communicator:
         """
         Creates Influx point from response and save into internal queue of Collector.
         """
-        #ready_flag, data = self.parse_response(self._response)
+        self.send_request()
+        test, data = self.parse_response()
+        # TODO debug
         ready_flag = True
         data = [32, 33, 34, 35, 36, 37]
         if ready_flag:
             point = (Point("energy-consumption")
-                     .tag('robotic-arm-id', 'X')
+                     .tag('robotic-arm', get_config('SLMP_IP_ADDR'))
                      .field("M32", int(data[0]))
                      .field("M33", int(data[1]))
                      .field("M34", int(data[2]))

@@ -3,8 +3,8 @@ Main program of asynchronous communication between Mitsubishi robotic arm and In
 """
 import asyncio
 from config import get_config
-from consumption_collector.communicator import Communicator
 from consumption_collector.collector import Collector
+from consumption_collector.communicator import Communicator
 
 
 async def obtain_point(com, sleep_time):
@@ -15,7 +15,6 @@ async def obtain_point(com, sleep_time):
     """
     while True:
         await asyncio.sleep(sleep_time)
-        com.send_request()
         com.get_point()
 
 
@@ -30,7 +29,7 @@ async def collect_points(coll, sleep_time):
         coll.flush_data()
 
 
-if __name__ == "__main__":
+def main():
     collector = Collector(url=get_config('INFLUX_URL'),
                           token=get_config('INFLUX_TOKEN'),
                           org=get_config('INFLUX_ORG'),
@@ -45,4 +44,8 @@ if __name__ == "__main__":
     loop.create_task(obtain_point(communicator, get_config('DATA_SLEEP', wrapper=float)))
     loop.create_task(collect_points(collector, get_config('FLUSH_SLEEP', wrapper=float)))
     loop.run_forever()
+
+
+if __name__ == "__main__":
+    main()
 
