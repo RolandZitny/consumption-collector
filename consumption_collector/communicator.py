@@ -5,13 +5,10 @@ This communicator serves to obtain values of energy consumption registers, which
 synchronization flag.
 Response is parsed and from data are created InfluxDB points, which are saved into internal queue of Collector.
 """
-import time
 import struct
 import datetime
-from influxdb_client import Point, WritePrecision
+from influxdb_client import Point
 from slmpclient import SLMPClient, SLMPPacket, FrameType, ProcessorNumber, TimerValue, SLMPCommand, SLMPSubCommand
-
-x = 0
 
 
 class Communicator:
@@ -89,11 +86,12 @@ class Communicator:
         """
         Creates Influx point from response and save into internal queue of Collector.
         """
-        ready_flag, data = self.parse_response(self._response)
-
+        #ready_flag, data = self.parse_response(self._response)
+        ready_flag = True
+        data = [32, 33, 34, 35, 36, 37]
         if ready_flag:
-            point = (Point("slmp").measurement('energy-consumption')
-                     .tag('Robotic Arm', 'X')
+            point = (Point("energy-consumption")
+                     .tag('robotic-arm-id', 'X')
                      .field("M32", int(data[0]))
                      .field("M33", int(data[1]))
                      .field("M34", int(data[2]))
