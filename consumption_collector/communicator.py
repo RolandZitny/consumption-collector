@@ -74,7 +74,8 @@ class Communicator:
         """
         self.send_request()
         ready_flag, data = self.parse_response()
-
+        ready_flag = True
+        data = [1,2,3,4,5,6]
         if ready_flag:
             point = (Point("energy-consumption")
                      .tag('robotic-arm', get_config('SLMP_IP_ADDR'))
