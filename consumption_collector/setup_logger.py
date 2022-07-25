@@ -1,4 +1,5 @@
 import logging
+from config import get_config
 
 
 _nameToLevel = {
@@ -25,4 +26,4 @@ def log_level(level) -> int:
 
 
 logger = logging.getLogger('collector')
-#logger.setLevel(log_level(get_config('LOGGER_LEVEL')))
+logger.setLevel(get_config('LOG_LEVEL', wrapper=log_level))
