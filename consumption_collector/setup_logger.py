@@ -14,7 +14,7 @@ _nameToLevel = {
 
 
 DEBUGGING_LOG_LEVEL = {
-    'slmpclient.client': logging.WARNING,
+    'client': logging.WARNING,
 }
 
 
