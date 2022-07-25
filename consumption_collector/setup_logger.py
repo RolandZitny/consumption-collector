@@ -15,7 +15,7 @@ _nameToLevel = {
 
 
 DEBUGGING_LOG_LEVEL = {
-    'client': logging.INFO,
+    'client': logging.DEBUG,
 }
 
 
