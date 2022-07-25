@@ -3,6 +3,7 @@ Configuration file for Docker.
 This file consists from SLMPClient parameters and InfluxDB parameters.
 """
 import os
+import logging
 from typing import Callable
 
 DEFAULT_CONFIG = {
@@ -19,6 +20,8 @@ DEFAULT_CONFIG = {
     'DATA_SLEEP': 0.0010,   # When getting data from robot sleep 1ms
     'FLUSH_SLEEP': 3        # Flush  every 3 seconds
 }
+
+logger = logging.getLogger('collector')
 
 
 def get_config(name: str, default=None, wrapper: Callable = None):
