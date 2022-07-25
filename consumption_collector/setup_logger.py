@@ -33,12 +33,19 @@ def log_level(level) -> int:
 
 LOG_LEVEL = get_config('LOGGER_LEVEL', wrapper=log_level)
 
-for log_name, level in DEBUGGING_LOG_LEVEL.items():
-    logging.getLogger(log_name).setLevel(level)
-
 root_logger = logging.getLogger()
 root_logger.setLevel(LOG_LEVEL)
 
+handler_stdout = logging.StreamHandler(sys.stdout)
+handler_stdout.setLevel(LOG_LEVEL)
+handler_stderr = logging.StreamHandler(sys.stderr)
+handler_stderr.setLevel(max(LOG_LEVEL, logging.WARNING))
+
+root_logger.addHandler(handler_stdout)
+root_logger.addHandler(handler_stderr)
+
+for log_name, level in DEBUGGING_LOG_LEVEL.items():
+    logging.getLogger(log_name).setLevel(level)
 
 logger = logging.getLogger()
 logger.setLevel(LOG_LEVEL)
