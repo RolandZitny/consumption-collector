@@ -53,4 +53,4 @@ def log_level(level) -> int:
 
 
 logger = logging.getLogger('collector')
-logger.setLevel(log_level(get_config('LOGGER_LEVEL')))
+#logger.setLevel(log_level(get_config('LOGGER_LEVEL')))

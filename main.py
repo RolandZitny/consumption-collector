@@ -36,7 +36,7 @@ def main():
     One cycle is for obtaining data points from robotic arm.
     Second cycle is for flushing obtained data into InfluxDB.
     """
-    logger.info('Start main program.')
+    logger.debug('Start main program.')
     collector = Collector(url=get_config('INFLUX_URL'),
                           token=get_config('INFLUX_TOKEN'),
                           org=get_config('INFLUX_ORG'),
