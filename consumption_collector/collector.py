@@ -4,7 +4,7 @@ These data are stored in a queue and after a defined time are flushed to the dat
 Every Collector is inserted inside another class called communicator. This communicator inserts data into internal
 queue of collector.
 """
-import logging
+import setup_logging
 from influxdb_client.client.influxdb_client import InfluxDBClient
 
 

@@ -6,7 +6,7 @@ synchronization flag.
 Response is parsed and from data are created InfluxDB points, which are saved into internal queue of Collector.
 """
 import struct
-import logging
+import setup_logging
 from config import get_config
 from datetime import datetime
 from influxdb_client import Point

@@ -12,3 +12,4 @@ services:
       - INFLUX_ORG=
       - DATA_SLEEP=
       - FLUSH_SLEEP=
+      - LOGGER_LEVEL=

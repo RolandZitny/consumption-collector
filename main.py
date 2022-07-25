@@ -28,7 +28,7 @@ async def collect_points(coll, sleep_time):
     while True:
         await sleep(sleep_time)
         coll.flush_data()
-        logger.warning('Flush data')
+        logger.debug('Flush data')
 
 
 def main():
@@ -37,7 +37,7 @@ def main():
     One cycle is for obtaining data points from robotic arm.
     Second cycle is for flushing obtained data into InfluxDB.
     """
-    logger.warning('Start main program.')
+    logger.info('Start main program.')
     collector = Collector(url=get_config('INFLUX_URL'),
                           token=get_config('INFLUX_TOKEN'),
                           org=get_config('INFLUX_ORG'),
