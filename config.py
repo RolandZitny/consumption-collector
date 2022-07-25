@@ -3,6 +3,7 @@ Configuration file for Docker.
 This file consists from SLMPClient parameters and InfluxDB parameters.
 """
 import os
+import logging
 from typing import Callable
 
 DEFAULT_CONFIG = {
@@ -27,3 +28,29 @@ def get_config(name: str, default=None, wrapper: Callable = None):
         wrapper = lambda x: x  # NOQA
     return wrapper(os.getenv(name, DEFAULT_CONFIG.get(name, default)))
 
+
+_nameToLevel = {
+    'CRITICAL': logging.CRITICAL,
+    'ERROR': logging.ERROR,
+    'WARN': logging.WARNING,
+    'WARNING': logging.WARNING,
+    'INFO': logging.INFO,
+    'DEBUG': logging.DEBUG,
+    'NOTSET': logging.NOTSET,
+}
+
+
+def log_level(level) -> int:
+    """
+        Method convert text representation of log level to int log level.
+    """
+    if isinstance(level, str):
+        _level = level.upper()
+        if _level not in _nameToLevel:
+            raise AttributeError('Unknown log level "{}"'.format(level))
+        return _nameToLevel[_level]
+    return level
+
+
+logger = logging.getLogger('collector')
+logger.setLevel(log_level(get_config('LOGGER_LEVEL')))
