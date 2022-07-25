@@ -26,4 +26,4 @@ def log_level(level) -> int:
 
 
 logger = logging.getLogger('collector')
-logger.setLevel(logging.CRITICAL)
+logger.setLevel(get_config('LOGGER_LEVEL', wrapper=log_level))
