@@ -7,8 +7,8 @@ from typing import Callable
 
 DEFAULT_CONFIG = {
     # slmpclient
-    'SLMP_IP_ADDR': 'IP SLMP SERVER',
-    'SLMP_PORT': 4071,
+    'SLMP_IP_ADDR': '192.168.10.201',
+    'SLMP_PORT': 4050,
     'SLMP_TCP': 1,
     # InfluxDB
     'INFLUX_URL': 'URL INFLUXDB',
