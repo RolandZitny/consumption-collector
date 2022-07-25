@@ -3,7 +3,7 @@ Main program of asynchronous communication between Mitsubishi robotic arm and In
 """
 from asyncio import sleep, get_event_loop
 from config import get_config
-from config import logger
+from setup_logging import logger
 from consumption_collector.collector import Collector
 from consumption_collector.communicator import Communicator
 
