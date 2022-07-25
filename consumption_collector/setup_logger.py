@@ -1,3 +1,4 @@
+import sys
 import logging
 from config import get_config
 
@@ -14,7 +15,7 @@ _nameToLevel = {
 
 
 DEBUGGING_LOG_LEVEL = {
-    'client': logging.WARNING,
+    'client': logging.INFO,
 }
 
 
@@ -30,8 +31,15 @@ def log_level(level) -> int:
     return level
 
 
+LOG_LEVEL = get_config('LOGGER_LEVEL', wrapper=log_level)
+
 for log_name, level in DEBUGGING_LOG_LEVEL.items():
     logging.getLogger(log_name).setLevel(level)
 
-logger = logging.getLogger('collector')
-logger.setLevel(get_config('LOGGER_LEVEL', wrapper=log_level))
+root_logger = logging.getLogger()
+root_logger.setLevel(LOG_LEVEL)
+
+
+logger = logging.getLogger()
+logger.setLevel(LOG_LEVEL)
+
