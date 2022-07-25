@@ -25,3 +25,4 @@ def get_config(name: str, default=None, wrapper: Callable = None):
     if not wrapper:
         wrapper = lambda x: x  # NOQA
     return wrapper(os.getenv(name, DEFAULT_CONFIG.get(name, default)))
+

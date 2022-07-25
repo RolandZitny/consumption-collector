@@ -1,6 +1,7 @@
 """
 Main program of asynchronous communication between Mitsubishi robotic arm and InfluxDB for collecting time series data.
 """
+import logging
 from asyncio import sleep, get_event_loop
 from config import get_config
 from consumption_collector.collector import Collector
@@ -35,6 +36,13 @@ def main():
     One cycle is for obtaining data points from robotic arm.
     Second cycle is for flushing obtained data into InfluxDB.
     """
+    DEBUGGING_LOG_LEVEL = {
+        'slmpclient.client': logging.INFO,
+    }
+
+    for log_name, level in DEBUGGING_LOG_LEVEL.items():
+        logging.getLogger(log_name).setLevel(level)
+
     collector = Collector(url=get_config('INFLUX_URL'),
                           token=get_config('INFLUX_TOKEN'),
                           org=get_config('INFLUX_ORG'),
