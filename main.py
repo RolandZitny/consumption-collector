@@ -7,6 +7,9 @@ from config import get_config
 from consumption_collector.collector import Collector
 from consumption_collector.communicator import Communicator
 
+logger = logging.getLogger(__name__)
+logger.info("START")
+
 
 async def obtain_point(com, sleep_time):
     """
@@ -28,6 +31,7 @@ async def collect_points(coll, sleep_time):
     while True:
         await sleep(sleep_time)
         coll.flush_data()
+        logger.warning("FLUSHDATA")
 
 
 def main():
@@ -36,8 +40,6 @@ def main():
     One cycle is for obtaining data points from robotic arm.
     Second cycle is for flushing obtained data into InfluxDB.
     """
-    logger = logging.getLogger(__name__)
-    logger.info("START")
     DEBUGGING_LOG_LEVEL = {
         'slmpclient.client': logging.INFO,
     }
