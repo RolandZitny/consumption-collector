@@ -4,7 +4,6 @@ These data are stored in a queue and after a defined time are flushed to the dat
 Every Collector is inserted inside another class called communicator. This communicator inserts data into internal
 queue of collector.
 """
-import logging
 from influxdb_client.client.influxdb_client import InfluxDBClient
 
 
@@ -17,7 +16,6 @@ class Collector:
         :param org: InfluxDB organization
         :param bucket: InfluxDB bucket
         """
-        self.logger = logging.getLogger(__name__)
         self._url = url
         self._token = token
         self._org = org
@@ -44,6 +42,3 @@ class Collector:
                 record.append(self._points_queue.pop(0))
 
             write_api.write(bucket=self._bucket, record=record)
-            self.logger.info("Data were flushed: Length: {}".format(len(record)))
-
-

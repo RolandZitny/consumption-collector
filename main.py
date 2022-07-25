@@ -28,7 +28,7 @@ async def collect_points(coll, sleep_time):
     while True:
         await sleep(sleep_time)
         coll.flush_data()
-        logger.warning('Flush data')
+        logger.debug('Flush data')
 
 
 def main():
