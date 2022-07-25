@@ -2,8 +2,7 @@
 Main program of asynchronous communication between Mitsubishi robotic arm and InfluxDB for collecting time series data.
 """
 from asyncio import sleep, get_event_loop
-from config import get_config
-from setup_logging import logger
+from config import get_config, logger
 from consumption_collector.collector import Collector
 from consumption_collector.communicator import Communicator
 
