@@ -36,6 +36,8 @@ def main():
     One cycle is for obtaining data points from robotic arm.
     Second cycle is for flushing obtained data into InfluxDB.
     """
+    logger = logging.getLogger(__name__)
+    logger.info("START")
     DEBUGGING_LOG_LEVEL = {
         'slmpclient.client': logging.INFO,
     }
