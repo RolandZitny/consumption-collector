@@ -47,6 +47,5 @@ root_logger.addHandler(handler_stderr)
 for log_name, level in DEBUGGING_LOG_LEVEL.items():
     logging.getLogger(log_name).setLevel(level)
 
-logger = logging.getLogger()
-logger.setLevel(LOG_LEVEL)
+logger = logging.getLogger('collector')
 
