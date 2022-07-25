@@ -2,9 +2,10 @@
 Main program of asynchronous communication between Mitsubishi robotic arm and InfluxDB for collecting time series data.
 """
 from asyncio import sleep, get_event_loop
-from config import get_config, logger
+from config import get_config
 from consumption_collector.collector import Collector
 from consumption_collector.communicator import Communicator
+from consumption_collector.setup_logger import logger
 
 
 async def obtain_point(com, sleep_time):
@@ -27,7 +28,7 @@ async def collect_points(coll, sleep_time):
     while True:
         await sleep(sleep_time)
         coll.flush_data()
-        logger.debug('Flush data')
+        logger.warning('Flush data')
 
 
 def main():
@@ -55,4 +56,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

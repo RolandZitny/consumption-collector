@@ -85,7 +85,3 @@ class Communicator:
                      .field("M37", float(data[5]))
                      .time(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-2]))
             self._collector.save_point(point)   # Save into Collector
-
-
-
-
