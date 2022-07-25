@@ -6,6 +6,7 @@ synchronization flag.
 Response is parsed and from data are created InfluxDB points, which are saved into internal queue of Collector.
 """
 import struct
+import logging
 from config import get_config
 from datetime import datetime
 from influxdb_client import Point
@@ -22,6 +23,7 @@ class Communicator:
         :param tcp: Flag -> True = TCP, False = UDP
         :param collector: Collector class, where to save points.
         """
+        self.logger = logging.getLogger(__name__)
         self._collector = collector
         self._client = SLMPClient(ip_addr=ipaddr, port=port, tcp=tcp)
         self._client.open()
@@ -37,6 +39,8 @@ class Communicator:
 
         self._request = slmp_controller.create_stream()
         self._response = None
+        self.logger.info("SLMP Client initialized and connection opened: "
+                         "IP_ADDR: {}  PORT: {}  TCP: {}".format(ipaddr, port, tcp))
 
     def parse_response(self):
         """
@@ -46,6 +50,8 @@ class Communicator:
         # Check whether answer is ok, if not exception
         # May occur when SLMP server does not understand request
         if self._response[8:10] != b'\x00\x00' or len(self._response) < 67:     # length of 7 registers
+            self.logger.warning("Response could not be parsed: "
+                                "SLMP_ERR_CODE: {} or response is too small (< 67 bytes)".format(self._response[8:10]))
             raise UnwantedResponse
 
         data = struct.unpack('<ddddddd', self._response[11:67])     # transfer 7 register values into readable form
@@ -68,6 +74,7 @@ class Communicator:
         """
         self.send_request()
         ready_flag, data = self.parse_response()
+
         if ready_flag:
             point = (Point("energy-consumption")
                      .tag('robotic-arm', get_config('SLMP_IP_ADDR'))
@@ -77,7 +84,7 @@ class Communicator:
                      .field("M35", float(data[3]))
                      .field("M36", float(data[4]))
                      .field("M37", float(data[5]))
-                     .time(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]))
+                     .time(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-2]))
             self._collector.save_point(point)   # Save into Collector
 
 
