@@ -13,6 +13,11 @@ _nameToLevel = {
 }
 
 
+DEBUGGING_LOG_LEVEL = {
+    'slmpclient.client': logging.WARNING,
+}
+
+
 def log_level(level) -> int:
     """
         Method convert text representation of log level to int log level.
@@ -24,6 +29,9 @@ def log_level(level) -> int:
         return _nameToLevel[_level]
     return level
 
+
+for log_name, level in DEBUGGING_LOG_LEVEL.items():
+    logging.getLogger(log_name).setLevel(level)
 
 logger = logging.getLogger('collector')
 logger.setLevel(get_config('LOGGER_LEVEL', wrapper=log_level))

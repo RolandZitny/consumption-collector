@@ -6,7 +6,6 @@ synchronization flag.
 Response is parsed and from data are created InfluxDB points, which are saved into internal queue of Collector.
 """
 import struct
-from setup_logger import logger
 from config import get_config
 from datetime import datetime
 from influxdb_client import Point
@@ -38,7 +37,6 @@ class Communicator:
 
         self._request = slmp_controller.create_stream()
         self._response = None
-        logger.debug('SLMP Client was initialized and connection opened.')
 
     def parse_response(self):
         """
