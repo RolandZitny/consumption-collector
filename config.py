@@ -18,7 +18,7 @@ DEFAULT_CONFIG = {
     # async comm sleep
     'DATA_SLEEP': 0.0010,   # When getting data from robot sleep 1ms
     'FLUSH_SLEEP': 3,        # Flush  every 3 seconds
-    'LOGGER_LEVEL': 'DEBUG'
+    'LOG_LEVEL': 'DEBUG'
 }
 
 
