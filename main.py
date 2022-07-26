@@ -5,7 +5,7 @@ from asyncio import sleep, get_event_loop
 from config import get_config
 from consumption_collector.collector import Collector
 from consumption_collector.communicator import Communicator
-from consumption_collector.setup_logger import logger
+#from consumption_collector.setup_logger import logger
 
 
 async def obtain_point(com, sleep_time):
@@ -28,7 +28,7 @@ async def collect_points(coll, sleep_time):
     while True:
         await sleep(sleep_time)
         coll.flush_data()
-        logger.debug('Flush data')
+        #logger.debug('Flush data')
 
 
 def main():
@@ -37,7 +37,7 @@ def main():
     One cycle is for obtaining data points from robotic arm.
     Second cycle is for flushing obtained data into InfluxDB.
     """
-    logger.debug('Start main program.')
+    #logger.debug('Start main program.')
     collector = Collector(url=get_config('INFLUX_URL'),
                           token=get_config('INFLUX_TOKEN'),
                           org=get_config('INFLUX_ORG'),
