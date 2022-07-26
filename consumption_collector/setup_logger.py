@@ -37,8 +37,8 @@ class LogFilter(logging.Filter):
 LOG_LEVEL = get_config('LOG_LEVEL', wrapper=log_level)
 
 DEBUGGING_LOG_LEVEL = {
-    'slmpclient.client': logging.DEBUG,
-    'slmpclient.slmp_controller': logging.DEBUG,
+    'slmpclient.client': logging.INFO,
+    'slmpclient.slmp_controller': logging.INFO,
 }
 
 root_logger = logging.getLogger()
