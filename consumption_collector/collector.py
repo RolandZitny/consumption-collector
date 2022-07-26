@@ -4,6 +4,7 @@ These data are stored in a queue and after a defined time are flushed to the dat
 Every Collector is inserted inside another class called communicator. This communicator inserts data into internal
 queue of collector.
 """
+from influxdb_client.client.exceptions import InfluxDBError
 from influxdb_client.client.influxdb_client import InfluxDBClient
 
 
@@ -41,4 +42,8 @@ class Collector:
             while len(self._points_queue) != 1:
                 record.append(self._points_queue.pop(0))
 
-            write_api.write(bucket=self._bucket, record=record)
+            try:
+                write_api.write(bucket=self._bucket, record=record)
+            except InfluxDBError:
+                #TODO log
+                raise Exception("Insufficient write permissions to InfluxDB.")
