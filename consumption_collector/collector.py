@@ -4,6 +4,7 @@ These data are stored in a queue and after a defined time are flushed to the dat
 Every Collector is inserted inside another class called communicator. This communicator inserts data into internal
 queue of collector.
 """
+from influxdb_client.client.write_api import ASYNCHRONOUS
 from influxdb_client.client.exceptions import InfluxDBError
 from influxdb_client.client.influxdb_client import InfluxDBClient
 
@@ -36,7 +37,7 @@ class Collector:
         This method takes all data from Collectors points_queue, till it reach empty queue + 1.
         """
         with InfluxDBClient(url=self._url, token=self._token, org=self._org) as influx_client:
-            write_api = influx_client.write_api()
+            write_api = influx_client.write_api(write_options=ASYNCHRONOUS)
             record = []
 
             while len(self._points_queue) != 1:
